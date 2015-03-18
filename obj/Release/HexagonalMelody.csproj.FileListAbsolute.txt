@@ -1,0 +1,3 @@
+D:\Adrian Bece Designs\Programming\HexagonalMelody\HexagonalMelody\bin\Release\HexagonalMelody.exe.config
+D:\Adrian Bece Designs\Programming\HexagonalMelody\HexagonalMelody\obj\Release\Interop.WMPLib.dll
+D:\Adrian Bece Designs\Programming\HexagonalMelody\HexagonalMelody\obj\Release\HexagonalMelody.csproj.ResolveComReference.cache
