@@ -16,6 +16,7 @@ namespace HexagonalMelody
     {
         private WavePlayer drumSounds = new WavePlayer();
         bool isKeyDown = false;
+        // pre-defined drum colors
         Color color_kickdrum = ColorTranslator.FromHtml("#603913");
         Color color_snareDrum = ColorTranslator.FromHtml("#c7b299");
         Color color_lTomDrum = ColorTranslator.FromHtml("#8c6239");
@@ -37,6 +38,7 @@ namespace HexagonalMelody
             cbox_drumkits.Items.AddRange(drumkits_list);
             cbox_drumkits.SelectedIndex = 0;
 
+            // add sounds
             drumSounds.AddWave("kickDrum", "Sounds/AcousticDrumset/KickDrum.wav");
             drumSounds.AddWave("tom1Drum", "Sounds/AcousticDrumset/Tom1.wav");
             drumSounds.AddWave("openHiHat", "Sounds/AcousticDrumset/OpenHiHat.wav");
@@ -55,7 +57,11 @@ namespace HexagonalMelody
 
         private void generateInstruments()
         {
+            // Draw the drums (hexagons), position them and color them
+
+            // Big drums
             Point[] hexCoordinates = { new Point(40, 0), new Point(120, 0), new Point(160, 70), new Point(120, 140), new Point(40, 140), new Point(0, 70) }; 
+            // small drums
             Point[] smallHexCoordinates = { new Point(20, 0), new Point(60, 0), new Point(75, 30), new Point(60, 60), new Point(20, 60), new Point(5, 30) };
 
             GraphicsPath polygon_path = new GraphicsPath(FillMode.Winding);
@@ -119,6 +125,7 @@ namespace HexagonalMelody
             crashCymbal.Visible = false;
         }
 
+        // play sounds on click
         private void kickDrum_Click(object sender, EventArgs e)
         {
             drumSounds.PlayWave("kickDrum");
@@ -159,6 +166,7 @@ namespace HexagonalMelody
             drumSounds.PlayWave("crashCymbal");
         }
 
+        // change drum kits
         private void cbox_drumkits_SelectedIndexChanged(object sender, EventArgs e)
         {
             mTomDrum.Visible = false;
@@ -182,6 +190,7 @@ namespace HexagonalMelody
 
         }
 
+        // play sounds on key press
        private void drums_fj_KeyPress(object sender, KeyPressEventArgs e)
         {
            if (e.KeyChar=='v') kickDrum.PerformClick();

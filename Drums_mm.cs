@@ -19,6 +19,8 @@ namespace HexagonalMelody
         int difficultySize = 0;
         int gameFlag = 0, gameCounter=0;
         private WavePlayer drumSounds = new WavePlayer();
+
+        // pre-defined drum colors
         Color color_kickdrum = ColorTranslator.FromHtml("#603913");
         Color color_snareDrum = ColorTranslator.FromHtml("#c7b299");
         Color color_lTomDrum = ColorTranslator.FromHtml("#8c6239");
@@ -46,6 +48,7 @@ namespace HexagonalMelody
             cbx_difficulty.Items.AddRange(difficulty_list);
             cbx_difficulty.SelectedIndex = 0;
 
+            // add sounds
             drumSounds.AddWave("kickDrum", "Sounds/AcousticDrumset/KickDrum.wav");
             drumSounds.AddWave("tom1Drum", "Sounds/AcousticDrumset/Tom1.wav");
             drumSounds.AddWave("openHiHat", "Sounds/AcousticDrumset/OpenHiHat.wav");
@@ -58,7 +61,12 @@ namespace HexagonalMelody
 
         private void generateInstruments()
         {
+            // Draw the drums (hexagons), position them and color them
+            
+            // Big drums
             Point[] hexCoordinates = { new Point(40, 0), new Point(120, 0), new Point(160, 70), new Point(120, 140), new Point(40, 140), new Point(0, 70) };
+            
+            // Small drums
             Point[] smallHexCoordinates = { new Point(20, 0), new Point(60, 0), new Point(75, 30), new Point(60, 60), new Point(20, 60), new Point(5, 30) };
 
             GraphicsPath polygon_path = new GraphicsPath(FillMode.Winding);
@@ -166,9 +174,10 @@ namespace HexagonalMelody
             // 1 - kickDrum 2-snare 3-lowTom 4-openHiHat 5-ClosedHiHat 6-CrashCymbal 7-mediumTom 8-highTom 
             drumSounds.PlayWave("closedHiHat");
 
+            // game logic
             if (gameFlag == 1 && gameCounter < difficultySize - 1 && beats[gameCounter] == 5)
             { gameCounter++; }
-
+  
             else if (gameFlag == 1 && gameCounter < difficultySize - 1 && beats[gameCounter] != 1)
             {
                 cbox_drumkits.Enabled = true;
@@ -435,6 +444,7 @@ namespace HexagonalMelody
 
         }
 
+        // change drum kits
         private void cbox_drumkits_SelectedIndexChanged(object sender, EventArgs e)
         {
             mTomDrum.Visible = false;
@@ -462,6 +472,7 @@ namespace HexagonalMelody
             this.Close();
         }
 
+        // new game clicked
         private void b_newPuzzle_Click(object sender, EventArgs e)
         {
             if (cbx_noVisualClues.Checked == false) { lbl_message.Text = "Watch the pattern!"; }
@@ -475,6 +486,7 @@ namespace HexagonalMelody
                 lbl_nIncorrect.Text = (Int32.Parse(lbl_nIncorrect.Text) + 1).ToString();
                 gameFlag = 0; gameCounter = 0;
             }
+            // generate a random pattern dependant on the difficulty
             int randomDrum=0;
             Random random = new Random();
             if (cbx_difficulty.SelectedIndex == 0) difficultySize = 4;
@@ -490,6 +502,7 @@ namespace HexagonalMelody
             {
                 randomDrum = random.Next(1, maxNum);
                 beats[i]=randomDrum;
+                // play the pattern for the player to see and hear
                using( Task playBeatTask = Task.Factory.StartNew(()=>playBeat(randomDrum))) playBeatTask.Wait();
             }
             gameFlag = 1; gameCounter = 0;
@@ -516,7 +529,7 @@ namespace HexagonalMelody
         private void playBeat(int drum)
         {
             // 1 - kickDrum 2-snare 3-lowTom 4-openHiHat 5-ClosedHiHat 6-CrashCymbal 7-mediumTom 8-highTom 
-
+            // play the pattern for the player to see and hear
                 if (cbx_noVisualClues.Checked == false && drum==1)
                 {
                         kickDrum.BackColor = Color.White;
